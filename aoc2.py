@@ -1,15 +1,15 @@
 elf_choice = []
 user_hint = []
+total_score1 = 0
+total_score2 = 0
+score_element1 = 0
+score_element2 = 0
+outcome = ''
 
 with open('aoc2-input.txt', 'r') as file:
     for line in file:
         elf_choice.append(line[0])
         user_hint.append(line[2])
-
-total_score1 = 0
-score_element1 = 0
-score_element2 = 0
-outcome = ''
 
 def score_element1(hint):
     if hint == 'X':
@@ -22,7 +22,7 @@ def score_element1(hint):
 
     return score_element1
 
-def game_outcome(elf_choice, hint):
+def game_outcome_round1(elf_choice, hint):
     if elf_choice == 'A' and hint == 'X':
         outcome = 'draw'
     elif elf_choice == 'A' and hint == 'Y':
@@ -58,7 +58,7 @@ def score_element2(outcome):
 
 #PROBLEM 1
 for x in range(len(elf_choice)):
-    outcome = game_outcome(elf_choice[x], user_hint[x])
+    outcome = game_outcome_round1(elf_choice[x], user_hint[x])
     score1 = score_element1(user_hint[x])
     score2 = score_element2(outcome)    
     round_score1 = score1 + score2
@@ -66,29 +66,46 @@ for x in range(len(elf_choice)):
 
 print(total_score1)
 
-#PROBLEM 2
+#PROBLEM 2    
+'''
+x = lose
+y = draw
+z = win
 
-# def correct_chooser(elf_choice, user_hint):
-#     choice_dict_A = {'X': 'draw', 'Y': 'win', 'Z': 'lose'}
-#     choice_dict_B = {'Y': 'draw', 'Z': 'win', 'X': 'lose'}
-#     choice_dict_C = {'Z': 'draw', 'X': 'win', 'Y': 'lose'}
+if elf choose rock (A), then x = scissors
+'''
+def game_outcome_round2(elf_choice, user_hint):
+    choice_dict_A = {'X': 'scissors', 'Y': 'rock', 'Z': 'paper'}
+    choice_dict_B = {'X': 'rock', 'Y': 'paper', 'Z': 'scissors'}
+    choice_dict_C = {'X': 'paper', 'Y': 'scissors', 'Z': 'rock'}
 
-#     if elf_choice == 'A':
-#         correct_choice = choice_dict_A[user_hint]
-#     elif elf_choice == 'B':
-#         correct_choice = choice_dict_B[user_hint]
-#     elif elf_choice == 'C':
-#         correct_choice = choice_dict_C[user_hint]
-#     print(correct_choice)
-    
-#     return correct_choice
+    if user_hint == 'X':
+        outcome = 'lose'
+    elif user_hint == 'Y':
+        outcome = 'draw'
+    elif user_hint == 'Z':
+        outcome = 'win'
 
-# for x in range(len(elf_choice)):
-#     score1 = score_element1(user_hint[x])  
-#     correct_chooser(elf_choice[x], user_hint[x])
-#     round_score2 = score1 
-#     total_score2 += round_score2
+    if elf_choice == 'A':
+        correct_choice = choice_dict_A[user_hint]
+    elif elf_choice == 'B':
+        correct_choice = choice_dict_B[user_hint]
+    elif elf_choice == 'C':
+        correct_choice = choice_dict_C[user_hint]
 
-# print(total_score2)
+    if correct_choice == 'rock':
+        score = 1
+    elif correct_choice == 'paper':
+        score = 2
+    elif correct_choice == 'scissors':
+        score = 3
 
-# score
+    return [outcome, score]
+
+for x in range(len(elf_choice)):
+    outcome = game_outcome_round2(elf_choice[x], user_hint[x])[0]
+    score = game_outcome_round2(elf_choice[x], user_hint[x])[1]     
+    round_score2 = score + score_element2(outcome) 
+    total_score2 += round_score2
+
+print(total_score2)

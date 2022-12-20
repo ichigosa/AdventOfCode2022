@@ -67,13 +67,7 @@ for x in range(len(elf_choice)):
 print(total_score1)
 
 #PROBLEM 2    
-'''
-x = lose
-y = draw
-z = win
 
-if elf choose rock (A), then x = scissors
-'''
 def game_outcome_round2(elf_choice, user_hint):
     choice_dict_A = {'X': 'scissors', 'Y': 'rock', 'Z': 'paper'}
     choice_dict_B = {'X': 'rock', 'Y': 'paper', 'Z': 'scissors'}

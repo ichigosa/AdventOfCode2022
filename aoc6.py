@@ -4,12 +4,12 @@ with open('aoc6-input.txt', 'r') as file:
     for line in file:
         datastream = line
 
-def find_marker(datastream, n):
+def find_marker(datastream, signal_len):
     i = 0
     while True:
-        signal = datastream[:n + i][-n:]
+        signal = datastream[:signal_len + i][-signal_len:]
         if len(signal) == len(set(signal)):
-            return n + i
+            return signal_len + i
         else: i += 1
 
 print(find_marker(datastream, 4)) #Answer to Part 1

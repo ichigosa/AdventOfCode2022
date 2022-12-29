@@ -1,5 +1,3 @@
-#PART 1
-
 with open('aoc6-input.txt', 'r') as file:
     for line in file:
         datastream = line
